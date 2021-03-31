@@ -10,10 +10,10 @@ class Entity:
 
 
 def read_data(src):
-    with open(src, newline='') as csvfile:
-        spamreader = csv.reader(csvfile, delimiter=',', quotechar='|')
+    with open(src, newline='') as file:
+        reader = csv.reader(file, delimiter=',', quotechar='|')
         entities = []
-        for row in spamreader:
+        for row in reader:
             if row[0] == 'label':
                 continue
             pixels = []
