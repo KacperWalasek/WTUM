@@ -11,7 +11,7 @@ class Entity:
 
 def read_data(src):
     with open(src, newline='') as file:
-        reader = csv.reader(file, delimiter=',', quotechar='|')
+        reader = csv.reader(file, delimiter=',')
         entities = []
         for row in reader:
             if row[0] == 'label':
