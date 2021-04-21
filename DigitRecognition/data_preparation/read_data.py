@@ -1,12 +1,5 @@
 import csv
-
-
-class Entity:
-    def __init__(self, label, pixels):
-        self.label = label
-        self.pixels = pixels
-    label = 0
-    pixels = [[]]
+from data_classes import Entity
 
 
 def read_data(src):
