@@ -4,3 +4,4 @@ class Entity:
         self.pixels = pixels
     label = 0
     pixels = [[]]
+
