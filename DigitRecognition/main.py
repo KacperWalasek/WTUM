@@ -1,18 +1,13 @@
-from data_preparation.read_data import read_data
-from interface.show_picture import show_pictures
-from data_preparation.binarization import binarize
+from flow.prepare_sets import prepare_sets
+from flow.train_algorithm import train_algorithm
 from algorithms.knearest_algorithm import KNearestAlgorithm
+from flow.validate import validate
 
 if __name__ == '__main__':
-    entries = read_data('data_preparation/train.csv')
-    for ent in entries:
-        print(ent.label)
-    print(entries[50].pixels)
-    # show_pictures([
-    #     [entries[80], 'picture80'], [binarize(entries[80]), 'binarized80'],
-    #     [entries[2], 'picture2'], [binarize(entries[2]), 'binarized2'],
-    #     [entries[3], 'picture3'], [binarize(entries[3]), 'binarized3'],
-    # ])
+    print('preparing data...')
+    training_set, testing_set, validation_set = prepare_sets()
     alg = KNearestAlgorithm()
-    alg.train([[-1, -1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]], [1, 0, 9, 3, 4, 5])
-    alg.predict([[-3.1, -2.3]])
+    print('training k-nearest algorithm...')
+    train_algorithm(alg, training_set)
+    print('testing algorithm...')
+    print('result: ', validate(alg, validation_set)*100, '%')

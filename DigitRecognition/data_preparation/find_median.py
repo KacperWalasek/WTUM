@@ -1,7 +1,6 @@
 def find_median(histogram):
     histogram = list(histogram)
     histogram.sort()
-    print(histogram)
     length = len(histogram)
     if length % 2 == 0:
         median = histogram[length//2 - 1] + histogram[length // 2]

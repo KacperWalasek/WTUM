@@ -7,10 +7,10 @@ class KNearestAlgorithm(AlgorithmInterface):
     labels = None
 
     def train(self, data, labels) -> None:
-        self.algorithm = NearestNeighbors(n_neighbors=1, algorithm='ball_tree').fit(data)
+        self.algorithm = NearestNeighbors(n_neighbors=100, algorithm='ball_tree').fit(data)
         self.labels = labels
 
     def predict(self, data) -> list:
         distances, indices = self.algorithm.kneighbors(data)
-        print('nearest', list(map( lambda index: self.labels[index[0]], indices)))
+        # print('nearest', list(map( lambda index: self.labels[index[0]], indices)))
         return list(map(lambda index: self.labels[index[0]], indices))
