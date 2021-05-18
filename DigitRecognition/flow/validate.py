@@ -28,5 +28,5 @@ def show_result_info(validation_set, result):
 
 def validate(algorithm, validation_set):
     result = algorithm.predict(list(map(lambda ent: extract_data(ent), validation_set)))
-    show_result_info(validation_set, result)
+    # show_result_info(validation_set, result)
     return compare(validation_set, result)
