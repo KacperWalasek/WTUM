@@ -1,5 +1,6 @@
 from data_preparation.binarization import binarize
 from data_preparation.read_data import read_data
+from data_preparation.skeletonization import skeletonize
 from flow.sort_entries import sort_entries
 
 def prepare_sets():
