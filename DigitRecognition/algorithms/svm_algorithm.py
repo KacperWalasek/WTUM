@@ -8,9 +8,13 @@ class SVMAlgorithm(AlgorithmInterface):
     algorithm = None
 
     def train(self, data, labels) -> None:
-        parameters = {'kernel': ('linear', 'rbf'), 'C': [1, 10]}
-        self.algorithm = GridSearchCV(svm.SVC(), parameters).fit(data, labels)
-        print(self.algorithm.best_estimator_)
+        parameters = [
+          {'C': [50, 75, 100, 125, 150], 'kernel': ['linear']},
+          {'C': [50, 75, 100, 125, 150], 'gamma': [0.01, 0.001, 0.0001], 'kernel': ['rbf']},
+         ]
+        # 12:10 - 12:16
+        # 12:20
+        self.algorithm = svm.SVC(kernel='rbf', C=100, gamma=0.01).fit(data, labels)
 
     def predict(self, data) -> list:
         results = self.algorithm.predict(data)
