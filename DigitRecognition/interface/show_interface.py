@@ -14,7 +14,7 @@ def init_pixels(pixels):
         pixels[i] = [0] * 28
 
 
-def show_interface(algorithm):
+def show_interface(algorithmSvm, algorithmKN):
     pixels = [None] * 28
     init_pixels(pixels)
 
@@ -22,7 +22,7 @@ def show_interface(algorithm):
     canvas_height = 280
 
     def test_button_press():
-        print(algorithm.predict([extract_data(Entity('-1', pixels))]))
+        print(algorithmSvm.predict([extract_data(Entity('-1', pixels))]))
         master.destroy()
         show_pictures([[Entity('-1', pixels), '']])
 
@@ -30,12 +30,15 @@ def show_interface(algorithm):
         algorithm2 = joblib.load('trained-' + algorithm.name() + '.pkl')
         result['text'] = algorithm2.predict([extract_data(Entity('-1', pixels))])
         #result['text'] = algorithm.predict([extract_data(Entity('-1', pixels))])
+
         w.delete("all")
         init_pixels(pixels)
 
     def paint(event):
         black = "#000000"
         x, y = int(event.x/10), int(event.y/10)
+        if x > 27 or y > 27 or x < 0 or y < 0:
+            return
         pixels[y][x] = 255
         x1, y1 = (event.x - 10), (event.y - 10)
         x2, y2 = (event.x + 10), (event.y + 10)
@@ -76,8 +79,4 @@ def show_interface(algorithm):
 
     label = Label(master, text="Rozpoznana liczba: ")
     label.pack(side=BOTTOM)
-
-    result = Label(master)
-    result.pack(side=BOTTOM)
-
     mainloop()
