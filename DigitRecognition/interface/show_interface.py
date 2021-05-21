@@ -10,7 +10,7 @@ def init_pixels(pixels):
         pixels[i] = [0] * 28
 
 
-def show_interface(algorithm):
+def show_interface(algorithmSvm, algorithmKN):
     pixels = [None] * 28
     init_pixels(pixels)
 
@@ -18,18 +18,21 @@ def show_interface(algorithm):
     canvas_height = 280
 
     def test_button_press():
-        print(algorithm.predict([extract_data(Entity('-1', pixels))]))
+        print(algorithmSvm.predict([extract_data(Entity('-1', pixels))]))
         master.destroy()
         show_pictures([[Entity('-1', pixels), '']])
 
     def button_press():
-        result['text'] = algorithm.predict([extract_data(Entity('-1', pixels))])
+        result_svm['text'] = algorithmSvm.predict([extract_data(Entity('-1', pixels))])[0]
+        result_kn['text'] = algorithmKN.predict([extract_data(Entity('-1', pixels))])[0]
         w.delete("all")
         init_pixels(pixels)
 
     def paint(event):
         black = "#000000"
         x, y = int(event.x/10), int(event.y/10)
+        if x > 27 or y > 27 or x < 0 or y < 0:
+            return
         pixels[y][x] = 255
         x1, y1 = (event.x - 10), (event.y - 10)
         x2, y2 = (event.x + 10), (event.y + 10)
@@ -46,10 +49,15 @@ def show_interface(algorithm):
     button = Button(master, text="Rozpoznaj", command=button_press)
     button.pack(side=BOTTOM)
 
-    label = Label(master, text="Rozpoznana liczba: ")
-    label.pack(side=BOTTOM)
+    result_svm = Label(master)
+    result_svm.pack(side=BOTTOM)
 
-    result = Label(master)
-    result.pack(side=BOTTOM)
+    label_svm = Label(master, text="Rozpoznana liczba przez SVM: ")
+    label_svm.pack(side=BOTTOM)
 
+    result_kn = Label(master)
+    result_kn.pack(side=BOTTOM)
+
+    label_kn = Label(master, text="Rozpoznana liczba przez k-nearest: ")
+    label_kn.pack(side=BOTTOM)
     mainloop()
