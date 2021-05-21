@@ -8,7 +8,7 @@ from interface.show_interface import show_interface
 
 if __name__ == '__main__':
     print('preparing data...')
-    training_set, testing_set, validation_set, scel_train, scel_val = prepare_sets()
+    training_set, validation_set = prepare_sets()
     algKN = KNearestAlgorithm()
     algSvm = SVMAlgorithm()
     print('training k-nearest algorithm...')
