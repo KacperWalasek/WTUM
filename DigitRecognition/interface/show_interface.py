@@ -31,6 +31,8 @@ def show_interface(algorithmSvm, algorithmKN):
     def paint(event):
         black = "#000000"
         x, y = int(event.x/10), int(event.y/10)
+        if x > 27 or y > 27 or x < 0 or y < 0:
+            return
         pixels[y][x] = 255
         x1, y1 = (event.x - 10), (event.y - 10)
         x2, y2 = (event.x + 10), (event.y + 10)
