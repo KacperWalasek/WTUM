@@ -4,3 +4,6 @@ class AlgorithmInterface:
 
     def predict(self, data) -> list:
         pass
+
+    def name(self) -> str:
+        pass

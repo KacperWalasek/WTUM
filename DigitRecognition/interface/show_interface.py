@@ -2,7 +2,11 @@ from tkinter import *
 
 from data_classes import Entity
 from data_preparation.data_extraction import extract_data
+from flow.prepare_sets import prepare_sets
+from flow.train_algorithm import train_algorithm
+from flow.validate import validate
 from interface.show_picture import show_pictures
+import joblib
 
 
 def init_pixels(pixels):
@@ -23,8 +27,10 @@ def show_interface(algorithmSvm, algorithmKN):
         show_pictures([[Entity('-1', pixels), '']])
 
     def button_press():
-        result_svm['text'] = algorithmSvm.predict([extract_data(Entity('-1', pixels))])[0]
-        result_kn['text'] = algorithmKN.predict([extract_data(Entity('-1', pixels))])[0]
+        algorithm2 = joblib.load('trained-' + algorithm.name() + '.pkl')
+        result['text'] = algorithm2.predict([extract_data(Entity('-1', pixels))])
+        #result['text'] = algorithm.predict([extract_data(Entity('-1', pixels))])
+
         w.delete("all")
         init_pixels(pixels)
 
@@ -38,6 +44,22 @@ def show_interface(algorithmSvm, algorithmKN):
         x2, y2 = (event.x + 10), (event.y + 10)
         w.create_oval(x1, y1, x2, y2, fill=black)
 
+    def train_alg_button_press():
+        print('preparing data...')
+        training_set, testing_set, validation_set = prepare_sets()
+        print('training ' + algorithm.name() + ' algorithm...')
+        train_algorithm(algorithm, training_set)
+        print('saving algorithm')
+        joblib.dump(algorithm, 'trained-' + algorithm.name() + '.pkl', compress=3)
+        print('done')
+
+    def test_alg_button_press():
+        print('preparing data...')
+        training_set, testing_set, validation_set = prepare_sets()
+        algorithm2 = joblib.load('trained-' + algorithm.name() + '.pkl')
+        print('testing ' + algorithm.name() + ' algorithm...')
+        print('result: ', validate(algorithm2, validation_set)*100, '%')
+
     master = Tk()
     master.title("Wpisz cyfre")
     w = Canvas(master,
@@ -49,15 +71,12 @@ def show_interface(algorithmSvm, algorithmKN):
     button = Button(master, text="Rozpoznaj", command=button_press)
     button.pack(side=BOTTOM)
 
-    result_svm = Label(master)
-    result_svm.pack(side=BOTTOM)
+    button2 = Button(master, text="Trenuj algorytm " + algorithm.name(), command=train_alg_button_press)
+    button2.pack(side=BOTTOM)
 
-    label_svm = Label(master, text="Rozpoznana liczba przez SVM: ")
-    label_svm.pack(side=BOTTOM)
+    button3 = Button(master, text="Testuj algorytm " + algorithm.name(), command=test_alg_button_press)
+    button3.pack(side=BOTTOM)
 
-    result_kn = Label(master)
-    result_kn.pack(side=BOTTOM)
-
-    label_kn = Label(master, text="Rozpoznana liczba przez k-nearest: ")
-    label_kn.pack(side=BOTTOM)
+    label = Label(master, text="Rozpoznana liczba: ")
+    label.pack(side=BOTTOM)
     mainloop()
