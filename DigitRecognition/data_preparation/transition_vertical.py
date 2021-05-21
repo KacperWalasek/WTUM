@@ -5,7 +5,7 @@ def transition_vertical(entity):
     tr_vertical = []
     for col in entity.pixels:
         ctr = 0
-        color = 255
+        color = 0
         for row in col:
             if row != color:
                 color = row
