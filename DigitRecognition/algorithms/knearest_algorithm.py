@@ -14,3 +14,6 @@ class KNearestAlgorithm(AlgorithmInterface):
         distances, indices = self.algorithm.kneighbors(data)
         # print('nearest', list(map( lambda index: self.labels[index[0]], indices)))
         return list(map(lambda index: self.labels[index[0]], indices))
+
+    def name(self) -> str:
+        return 'k-nearest'

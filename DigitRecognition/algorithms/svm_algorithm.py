@@ -19,3 +19,6 @@ class SVMAlgorithm(AlgorithmInterface):
     def predict(self, data) -> list:
         results = self.algorithm.predict(data)
         return results
+
+    def name(self) -> str:
+        return 'svm'
