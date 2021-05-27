@@ -1,3 +1,4 @@
+import io
 from tkinter import *
 
 from algorithms.knearest_algorithm import KNearestAlgorithm
@@ -8,6 +9,7 @@ from flow.prepare_sets import prepare_sets
 from flow.train_algorithm import train_algorithm
 from flow.validate import validate
 from interface.show_picture import show_pictures
+from PIL import Image, ImageDraw #needs 'Pillow' to work
 import joblib
 
 
@@ -22,15 +24,23 @@ def show_interface():
 
     canvas_width = 280
     canvas_height = 280
+    image1 = Image.new("RGB", (canvas_width, canvas_height), "#FFFFFF")
+    draw = ImageDraw.Draw(image1)
 
     def button_press():
         algorithm1 = joblib.load('trained-svm.pkl')
         algorithm2 = joblib.load('trained-k-nearest.pkl')
+        for i in range(0, 28):
+            for j in range(0, 28):
+                pixels[j][i] = 255 - image1.getpixel((5+i*10, 5+j*10))[0]
+        #image1.show()
+        #show_pictures([[Entity('1', pixels), '1']])
         resultSVM['text'] = algorithm1.predict([extract_data(Entity('-1', pixels))])
         resultKN['text'] = algorithm2.predict([extract_data(Entity('-1', pixels))])
 
         w.delete("all")
         init_pixels(pixels)
+        draw.rectangle([(0, 0), (280, 280)], fill="#FFFFFF")
 
     def paint(event):
         black = "#000000"
@@ -38,9 +48,11 @@ def show_interface():
         if x > 27 or y > 27 or x < 0 or y < 0:
             return
         pixels[y][x] = 255
-        x1, y1 = (event.x - 10), (event.y - 10)
-        x2, y2 = (event.x + 10), (event.y + 10)
+        r = 10
+        x1, y1 = (event.x - r), (event.y - r)
+        x2, y2 = (event.x + r), (event.y + r)
         w.create_oval(x1, y1, x2, y2, fill=black)
+        draw.ellipse([(x1, y1), (x2, y2)], fill=black)
 
     def train_alg_button_press():
         algSVM = SVMAlgorithm()
