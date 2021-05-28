@@ -79,6 +79,34 @@ def show_interface():
         print('testing k-nearest algorithm...')
         print('result: ', validate(algKN, validation_set)*100, '%')
 
+    def add_to_my_set_button_press():
+        for i in range(0, 28):
+            for j in range(0, 28):
+                pixels[j][i] = 255 - image1.getpixel((5 + i * 10, 5 + j * 10))[0]
+        my_set = joblib.load('my_set.pkl')
+        algorithm1 = joblib.load('trained-svm.pkl')
+        algorithm2 = joblib.load('trained-k-nearest.pkl')
+        resultSVM['text'] = algorithm1.predict([extract_data(Entity('-1', pixels))])
+        resultKN['text'] = algorithm2.predict([extract_data(Entity('-1', pixels))])
+        my_set.append(Entity(label.get(), pixels))
+        joblib.dump(my_set, 'my_set.pkl', compress=3)
+        label.set('')
+        w.delete("all")
+        init_pixels(pixels)
+        draw.rectangle([(0, 0), (280, 280)], fill="#FFFFFF")
+
+    def test_my_set_button_press():
+        my_set = joblib.load('my_set.pkl')
+        algSVM = joblib.load('trained-svm.pkl')
+        algKN = joblib.load('trained-k-nearest.pkl')
+        print('testing svm algorithm...')
+        print('result: ', validate(algSVM, my_set) * 100, '%')
+        print('testing k-nearest algorithm...')
+        print('result: ', validate(algKN, my_set) * 100, '%')
+
+    def clear_my_set_button_press():
+        joblib.dump([], 'my_set.pkl', compress=3)
+
     master = Tk()
     master.title("Wpisz cyfre")
 
@@ -87,6 +115,25 @@ def show_interface():
                height=canvas_height)
     w.pack(expand=YES, fill=BOTH)
     w.bind("<B1-Motion>", paint)
+
+    button6 = Button(master, text="Wyczyść własny zbiór", command=clear_my_set_button_press)
+    button6.pack(side=BOTTOM)
+
+    button5 = Button(master, text="Testuj własnym zbiorem", command=test_my_set_button_press)
+    button5.pack(side=BOTTOM)
+
+    button4 = Button(master, text="Rozpoznaj i dodaj do własnego zbioru", command=add_to_my_set_button_press)
+    button4.pack(side=BOTTOM)
+
+    label = StringVar()
+    labelBox = Entry(master, width=5, textvariable=label)
+    labelBox.pack(side=BOTTOM)
+
+    label3 = Label(master, text="Własny zbiór (Podaj etykietę)")
+    label3.pack(side=BOTTOM)
+
+    space = Label(master, text="")
+    space.pack(side=BOTTOM)
 
     button = Button(master, text="Rozpoznaj", command=button_press)
     button.pack(side=BOTTOM)
