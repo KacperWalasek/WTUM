@@ -31,3 +31,5 @@ Wytrenowany algorytm jest od razu zapisywany do pliku .pkl, dlatego nie ma potrz
 
 (update)
 Teraz dodatkowo można dodać narysowaną cyfrę do swojego zbioru z podaną etykietą, przetestować algorytmy ze swoim zbiorem oraz go wyczyścić (istniejący zbiór będzie wczytany po starcie programu)
+
+ ![](honest_work.jpg?raw=true)
