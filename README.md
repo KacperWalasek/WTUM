@@ -5,7 +5,7 @@ Rozpoznawanie cyfr na bitmapach
 
 Aby program dało się poprawnie skompilować i uruchomić potrzebujemy środowiska uruchomieniowego obsługującego język Python.
 
-W naszym przypadku wykorzystaliśmy najnowszą dostępną wersję (2021.1.1) IDE PyCharm Community oraz Python w wesji 3.8 i 3.9 dostępny na oficjalnej stronie www.python.org
+W naszym przypadku wykorzystywaliśmy najnowszą dostępną wersję (2021.1.1) IDE PyCharm Community oraz Python w wesji 3.8 i 3.9 dostępny na oficjalnej stronie www.python.org
 
 Ponadto, aby uzyskać dostęp do używanych przez nas bibliotek konieczne jest zainstalowanie dodatkowych pakietów:
 
