@@ -15,7 +15,7 @@ Ponadto, aby uzyskać dostęp do używanych przez nas bibliotek konieczne jest z
  - mahotas
  - PySimpleGUI
 
-## GUI explanaition
+## GUI explanation
 
 Po skompilowaniu użytkownik powinien zobaczyć pustą planszę (280x280), na której może rysować, a także 3 przyciski:
 
