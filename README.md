@@ -28,3 +28,6 @@ Trenuj i testuj algorytmy robią dokładnie to, co sugeruje nazwa wykorzystując
 Przycisk rozpoznaj ekstraktuje cechy narysowanego przez nas obrazka i próbuje zgadnąć co to za cyfra z wykorzystaniem wytenowanych wcześniej algorytmów (SVM i k-nearest neighbours).
 
 Wytrenowany algorytm jest od razu zapisywany do pliku .pkl, dlatego nie ma potrzeby trenowania algorytmów po każdym uruchomieniu programu.
+
+(update)
+Teraz dodatkowo można dodać narysowaną cyfrę do swojego zbioru z podaną etykietą, przetestować algorytmy ze swoim zbiorem oraz go wyczyścić (istniejący zbiór będzie wczytany po starcie programu)
